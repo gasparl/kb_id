@@ -10,10 +10,6 @@ img {
     text-align: center;
 }
 
-#rating, #consent {
-    display: none;
-}
-
 #demographics, #intro, #intermission, #attention_check {
     display: none;
     position: relative;
