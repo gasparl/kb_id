@@ -10,7 +10,7 @@ img {
     text-align: center;
 }
 
-#demographics, #intro, #intermission, #attention_check {
+#demographics, #intro, #newsection {
     display: none;
     position: relative;
     text-align: center;
