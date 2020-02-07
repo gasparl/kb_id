@@ -18,10 +18,11 @@
         <br>
         <p><b>Study Goal:</b>
             <br>The study aims to assess the validity of typing pattern based authentication. You will be asked to type in various texts, and your keypress details (the time of pressing down and letting up each key) will be recorded. Using the data
-            obtained from many participants in this study, we will try to see whether or not we can identify the person who truly wrote a specific text section, based on the typing pattern of the same person in other text sections.</p>
+            obtained from many participants in this study, we will try to see whether or not we can identify the person who truly wrote a specific text section, based on the typing pattern of the same person in other text sections. In one part of the study, you will be asked to try to fake the way you type. In the rest of the study, you will be asked to type as you normally would.</p>
         <br>
         <p><b>Payment and Rules:</b>
-            <br>The test takes around 20-25 minutes. Completed and valid participation will be rewarded with $3.00 gross. You can stop participating in the study (by closing or refreshing the website) at any time, and without giving reasons. In that case,
+            <br>The test takes around 20-25 minutes. Completed and valid participation will be rewarded with $3.00 gross. You can stop participating in the study (by closing or refreshing the website) at any time, and without giving reasons. In that
+            case,
             all your data will be erased, and you will not receive payment.</p>
         <br>
         <p><b>Data:</b>
@@ -55,11 +56,11 @@
         </select>
         <br>
         <br>
-        <button type="button" onclick="save_demo();">submit</button>
+        <button type="button">submit</button>
     </div>
 
     <div id="intro">
-        On each trial you will see a word or a sentence. You will have to memorize this word or sentence and press Enter. The word or sentence will then disappear, and you have to type it from your memory.
+        In the entire following test, on each trial you will see a word or a sentence. You will have to memorize this word or sentence and press Enter. The word or sentence will then disappear, and you have to type it from your memory.
         <br>
         <br>
         Example: (1) The word "apple" appears. (2) You press enter. (3) The word "apple" disappears and you have a textbox where you have to type "apple".
@@ -68,127 +69,49 @@
         Please try to be accurate. Occasional small mistakes (e.g. appel instead of apple) are acceptable, but if your typed text is very different from the original text, your will get a warning each time.
         <br>
         <br>
+        The following two trials will serve as practice, to get used to the task.
+        <br>
+        <br>
         <div class="start_button">
             <button type="button" onclick="starttask();">OK</button>
         </div>
 
     </div>
 
-    <div id="rating">
 
-        <div id="stimulus_rate">
-            <canvas id="rate_canvas" width="300" height="300"></canvas>
+    <div id="newsection">
+        <br>
+        <br>
+        <span id='section_text'>
+            The remaining test will be the same, but it will consist of four sections. You will receive instructions before each section separately.
             <br>
-        </div>
-
-        <div id="rating_actual" style="display:none">
-
-            <p>Please select the ratings.</p>
             <br>
-            <div id="container">
-
-                <div id="scale_container">
-                    <br><br>
-
-                    <!-- VALENCE SCALE -->
-                    <div id="valencefull_id">
-                        <input type="range" min="1" max="9" value="5" class="slider" id="valence_id">
-                        <div class="sliderticks">
-                            <p>Negative 负</p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p>Positive 正</p>
-                        </div>
-                        <p>Value selected: <span id="display_v"></span></p>
-                        <br>
-                    </div>
-
-                    <div id="arousalfull_id">
-                        <!-- AROUSAL SCALE -->
-                        <input type="range" min="1" max="9" value="5" class="slider" id="arousal_id">
-                        <div class="sliderticks">
-                            <p>Low 矮</p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p>High 高</p>
-                        </div>
-                        <p>Value selected: <span id="display_a"></span></p>
-                        <br>
-                    </div>
-
-                    <!-- CLARITY SCALE -->
-                    <input type="range" min="1" max="9" value="5" class="slider" id="clarity_id">
-                    <div class="sliderticks">
-                        <p>Completely unclear</p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p></p>
-                        <p>Completely clear</p>
-                    </div>
-                    <p>Value selected: <span id="display_c"></span></p>
-                    <br>
-
-                    <br>
-                </div>
-                <br>
-                <br>
-                <button style="float:left" onclick="skip()">submit without rating</button>
-                <button style="float:right" id="submit_button">confirm</button>
-            </div>
-        </div>
-    </div>
-
-
-    <div id="attention_check">
-        This is a simple attention check. Please select what was depicted on the last image that you just saw.
+            In this section, <b>please type just as you normally would</b>. This represents a scenario where you simply use the computer in a regular situation (e.g. drafting a document for your legal work or writing casual chat messages) and you have nothing important to hide.
+            <br>
+            <br>
+            In this section, <b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation where you engage in a serious illegal activity while using your computer (e.g. drafting a plan for a terrorist attack or arranging a contract murder via chat messages) and it is important for you to hide your identity, which may be detected based on the way you type.
+        </span>
         <br>
         <br>
-        <input type="radio" name="acheck" value="1"> apple <br>
-        <br>
-        <input type="radio" name="acheck" value="2"> baby <br>
-        <br>
-        <input type="radio" name="acheck" value="3"> car <br>
-        <br>
-        <input type="radio" name="acheck" value="4"> dog <br>
-        <br>
-        <input type="radio" name="acheck" value="5"> egg <br>
-        <br>
-        <input type="radio" name="acheck" value="6"> forest <br>
-        <br>
-        <input type="radio" name="acheck" value="7"> gun <br>
-        <br>
-        <input type="radio" name="acheck" value="8"> hat <br>
-        <br>
-        <br>
-        <button type="button" onclick="$('#attention_check').hide();$('#intermission').show();">confirm</button>
-    </div>
-
-    <div id="intermission">
-        Thank you. In this last very short phase, please rate again a few pictures that you already rated. This is to assess the reliability of your responses.
-        <br>
-        <br>
-        <div class="load_screen">
-            <i>Loading images! Please wait.</i>
-        </div>
         <div class="start_button">
-            <button type="button" onclick="starttask();">start</button>
+            <button type="button" onclick="starttask();">OK</button>
         </div>
 
     </div>
+
+
+    <div id="memorize">
+        <br>
+
+
+    </div>
+
+    <div id="typein">
+        <br>
+
+
+    </div>
+
 
     <div id="Bye">
         <h1>Thank you for your participation!</h1>
