@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Emotion Rating Task</title>
+    <link rel="icon" type="image/png" href="lgo.png">
+    <meta charset="UTF-8">
+    <script src="./kb_id.js"></script>
+    <link href="./kb_id.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="div_end_error" style="background:red;color:black;font-size:2.2vw;display:none;position:absolute;z-index:100;" onclick="dl_as_file()">Data cannot be saved on the server. <b>Click anywhere on this text to save your data manually.</b>
+        (You must allow pop-ups.) If this is live testing, send the data to lkcsgaspar@gmail.com (or contact in case of further issues).
+    </div>
+
+    <div id="consent">
+        <h1>Participation Information and Consent Form</h1>
+        <br>
+        <p><b>Study Goal:</b>
+            <br>The study aims to assess the validity of typing pattern based authentication. You will be asked to type in various texts, and your keypress details (the time of pressing down and letting up each key) will be recorded. Using the data
+            obtained from many participants in this study, we will try to see whether or not we can identify the person who truly wrote a specific text section, based on the typing pattern of the same person in other text sections.</p>
+        <br>
+        <p><b>Payment and Rules:</b>
+            <br>The test takes around 20-25 minutes. Completed and valid participation will be rewarded with $3.00 gross. You can stop participating in the study (by closing or refreshing the website) at any time, and without giving reasons. In that case,
+            all your data will be erased, and you will not receive payment.</p>
+        <br>
+        <p><b>Data:</b>
+            <br>The data from the following test will be used and published to be freely available for research purposes. The data will not reveal who you are, you will not be named and your identity will remain strictly confidential.</p>
+        <br>
+        <p><b>Website and Contact:</b>
+            <br>This web-based experimental program has been thoroughly tested and proven stable many times, but we do not take responsibility for potential unexpected technical issues. Nonetheless, if you experience any problems, you can contact
+            gaspar.lukacs @ univie.ac.at (Gaspar Lukacs at the University of Vienna).</p>
+        <br>
+        <p><b>Consent:</b>
+            <br>
+            By clicking the "Consent" button below, you confirm that you have read and understood the participation information. You also confirm that you will be concentrating on the tasks and answering questions truthfully and to the best of
+            your knowledge.</p>
+        <br>
+        <button type="button" id="consent_button" onclick='consented();'>Consent</button>
+    </div>
+
+    <div id="demographics">
+        <h1>Demographical Data</h1>
+        <br>
+        <h3>Please give your information below.</h3>
+        <br>
+        <p><b>Gender:</b></p>
+        <input type="radio" name="gender" class="dem_form" value="1"> Male
+        <input type="radio" name="gender" class="dem_form" value="2"> Female
+        <p><b>Age:</b></p>
+        <input type="number" value="" min="1" max="120" class="dem_form" id="age"><br>
+        <p><b>Country of origin:</b></p>
+        <select id="country" style="text-transform: capitalize;" class="dem_form">
+            <option value="">-</option>
+        </select>
+        <br>
+        <br>
+        <button type="button" onclick="save_demo();">submit</button>
+    </div>
+
+    <div id="intro">
+        On each trial you will see a word or a sentence. You will have to memorize this word or sentence and press Enter. The word or sentence will then disappear, and you have to type it from your memory.
+        <br>
+        <br>
+        Example: (1) The word "apple" appears. (2) You press enter. (3) The word "apple" disappears and you have a textbox where you have to type "apple".
+        <br>
+        <br>
+        Please try to be accurate. Occasional small mistakes (e.g. appel instead of apple) are acceptable, but if your typed text is very different from the original text, your will get a warning each time.
+        <br>
+        <br>
+        <div class="start_button">
+            <button type="button" onclick="starttask();">OK</button>
+        </div>
+
+    </div>
+
+    <div id="rating">
+
+        <div id="stimulus_rate">
+            <canvas id="rate_canvas" width="300" height="300"></canvas>
+            <br>
+        </div>
+
+        <div id="rating_actual" style="display:none">
+
+            <p>Please select the ratings.</p>
+            <br>
+            <div id="container">
+
+                <div id="scale_container">
+                    <br><br>
+
+                    <!-- VALENCE SCALE -->
+                    <div id="valencefull_id">
+                        <input type="range" min="1" max="9" value="5" class="slider" id="valence_id">
+                        <div class="sliderticks">
+                            <p>Negative 负</p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p>Positive 正</p>
+                        </div>
+                        <p>Value selected: <span id="display_v"></span></p>
+                        <br>
+                    </div>
+
+                    <div id="arousalfull_id">
+                        <!-- AROUSAL SCALE -->
+                        <input type="range" min="1" max="9" value="5" class="slider" id="arousal_id">
+                        <div class="sliderticks">
+                            <p>Low 矮</p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p>High 高</p>
+                        </div>
+                        <p>Value selected: <span id="display_a"></span></p>
+                        <br>
+                    </div>
+
+                    <!-- CLARITY SCALE -->
+                    <input type="range" min="1" max="9" value="5" class="slider" id="clarity_id">
+                    <div class="sliderticks">
+                        <p>Completely unclear</p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p>Completely clear</p>
+                    </div>
+                    <p>Value selected: <span id="display_c"></span></p>
+                    <br>
+
+                    <br>
+                </div>
+                <br>
+                <br>
+                <button style="float:left" onclick="skip()">submit without rating</button>
+                <button style="float:right" id="submit_button">confirm</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="attention_check">
+        This is a simple attention check. Please select what was depicted on the last image that you just saw.
+        <br>
+        <br>
+        <input type="radio" name="acheck" value="1"> apple <br>
+        <br>
+        <input type="radio" name="acheck" value="2"> baby <br>
+        <br>
+        <input type="radio" name="acheck" value="3"> car <br>
+        <br>
+        <input type="radio" name="acheck" value="4"> dog <br>
+        <br>
+        <input type="radio" name="acheck" value="5"> egg <br>
+        <br>
+        <input type="radio" name="acheck" value="6"> forest <br>
+        <br>
+        <input type="radio" name="acheck" value="7"> gun <br>
+        <br>
+        <input type="radio" name="acheck" value="8"> hat <br>
+        <br>
+        <br>
+        <button type="button" onclick="$('#attention_check').hide();$('#intermission').show();">confirm</button>
+    </div>
+
+    <div id="intermission">
+        Thank you. In this last very short phase, please rate again a few pictures that you already rated. This is to assess the reliability of your responses.
+        <br>
+        <br>
+        <div class="load_screen">
+            <i>Loading images! Please wait.</i>
+        </div>
+        <div class="start_button">
+            <button type="button" onclick="starttask();">start</button>
+        </div>
+
+    </div>
+
+    <div id="Bye">
+        <h1>Thank you for your participation!</h1>
+        <br>
+        <h1>Bye!</h1>
+        <br>
+
+        <!-- below the green tickmark "&#10004;" will indicate successful uploading of the data for the lab experiment in Vienna -->
+        <span style="color:green;display:none;font-size:200%;" id='scs_id'>&#10004;</span>
+
+    </div>
+
+</body>
