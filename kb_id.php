@@ -4,8 +4,12 @@ ini_set("display_errors", 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$file_name = ('./kb_id_results/' . $_POST['filename_post']);
-$subject_results = $_POST['results_post'];
+$postdata = trim(file_get_contents("php://input"));
+
+$request = json_decode($postdata);
+$file_name = './kb_id_results/' .  $request->fname_post;
+$subject_results = $request->results_post;
+
 $outcome = file_put_contents($file_name, $subject_results, FILE_APPEND);
 
 if ($outcome > 500 AND substr($file_name, -4) === ".txt" AND substr($file_name, -19, 4) === "_202") {
