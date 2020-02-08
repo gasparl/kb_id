@@ -13,10 +13,10 @@
         (You must allow pop-ups.) If this is live testing, send the data to lkcsgaspar@gmail.com (or contact in case of further issues).
     </div>
 
-    <div id="consent" class="defau">
+    <div class="defau_long" id="consent">
         <h3>Information and Consent</h3>
 
-        <div style="text-align:justify">
+        <div class="longtext">
             <p><b>Study Goal:</b>
                 <br>The study aims to assess the validity of typing pattern based authentication. You will be asked to type in various texts, and your keypress details (the time of pressing down and letting up each key) will be recorded. Using the
                 data
@@ -42,48 +42,57 @@
 
         </div>
 
-        <button id="consent_button" onclick='consented();'>Consent</button>
+        <button onclick='consented();'>Consent</button>
     </div>
 
     <div id="demographics" class="defau">
-        <h3>Please let us know your gender and age.</h3>
-        <br>
+        <p>Please let us know your gender and age.</p>
+        <br />
         <p><b>Gender:</b></p>
-        <input type="radio" name="gender" class="dem_form" value="1"> Male
-        <input type="radio" name="gender" class="dem_form" value="2"> Female
+        <input type="radio" name="gender" value="1"> Male
+        <input type="radio" name="gender" value="2"> Female
+        <br>
+        <br>
         <p><b>Age:</b></p>
-        <input type="number" value="" min="1" max="120" class="dem_form" id="age">
+        <input type="number" min="10" max="100" id="age">
         <br>
         <br>
-        <button type="button">OK</button>
+        <br>
+        <button onclick='to_intro();'>OK</button>
+        <br>
+        <br>
     </div>
 
-    <div id="intro" class="defau">
-        In the entire following test, on each trial you will see a short text. You will have to memorize this text and press Enter. The text will then disappear, and you have to type it from your memory.
-        <br>
-        <br>
-        Example: (1) The text "the sky is blue" appears. (2) You press enter. (3) The text "the sky is blue" disappears and you have a textbox where you have to type "the sky is blue".
-        <br>
-        <br>
-        Please try to be accurate, but do not worry about small mistakes. Occasional typos, e.g. "bleu" or "blu" instead of "blue", are acceptable. However, if your typed text is very different from the original text, your will get a warning.
-        <br>
-        <br>
-        Please use lowercase letters only. (Hence, do not use <i>Shift</i> or <i>Caps Lock</i>).
-        <br>
-        <br>
-        The following two trials will serve as practice, to get used to the task.
-        <br>
-        <br>
+    <div id="intro" class="defau_long">
+        <h3>Instructions</h3>
+
+        <div class="longtext">
+            In the entire following test, on each trial you will see a short text. You will have to memorize this text and press Enter. The text will then disappear, and you have to type it from your memory.
+            <br>
+            <br>
+            Example: (1) The text "the sky is blue" appears. (2) You press enter. (3) The text "the sky is blue" disappears and you have a textbox where you have to type "the sky is blue".
+            <br>
+            <br>
+            Please try to be accurate, but do not worry about small mistakes. Occasional typos, e.g. "bleu" or "blu" instead of "blue", are acceptable. However, if your typed text is very different from the original text, your will get a warning.
+            <br>
+            <br>
+            Please use lowercase letters only. (Hence, do not use <i>Shift</i> or <i>Caps Lock</i>).
+            <br>
+            <br>
+            The following two trials will serve as practice, to get used to the task.
+            <br>
+            <br>
+            <br>
+        </div>
         <div class="start_button">
             <button type="button" onclick="starttask();">OK</button>
         </div>
-
     </div>
 
-    <div id="newsection" class="defau">
+    <div id="newsection" class="defau_long">
         <br>
         <br>
-        <span id='section_text'>
+        <div id='section_text' class="longtext">
             The remaining test will be the same, but it will consist of four sections. You will receive instructions before each section separately.
             <br>
             <br>
@@ -93,7 +102,8 @@
             <br>
             In this section, <b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation where you engage in a serious illegal activity while using your computer (e.g. drafting a plan for a terrorist
             attack or arranging a contract murder via chat messages) and it is important for you to hide your identity, which may be detected based on the way you type.
-        </span>
+        </div>
+        <br>
         <br>
         <br>
         <div class="start_button">
@@ -105,24 +115,24 @@
 
     <div id="memorize" class="defau">
         <br>
-
         Please memorize the following text:
-
-        XXXXX
-
-        Press enter when you are ready.
-
+        <br>
+        <br>
+        <span id="tomemorize"></span>
+        <br>
+        <br>
+        Press Enter when you are ready.
     </div>
 
     <div id="typein" class="defau">
         <br>
-
-
-        Please type in the text that you just saw
+        Please type in the text that you just saw.
+        <br>
+        <br>
         <input id="input_id">
-
-        Press enter when you are ready.
-
+        <br>
+        <br>
+        Press Enter when you are ready.
     </div>
 
 

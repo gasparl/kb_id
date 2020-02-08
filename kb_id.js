@@ -1,39 +1,52 @@
 /*jshint esversion: 6 */
-
-let start = Date.now();
+let end_url = "https://www.prolific.co/";
 document.addEventListener("DOMContentLoaded", function() {
+    if (mobile()) {
+        alert(
+            "You seem to be using a smartphone or tablet. \nUnfortunately you cannot do this experiment on a mobile device. \nPlease start the experiment again with a normal webbrowser on your computer."
+        );
+        window.location = end_url;
+    }
     document.getElementById('consent').style.display = 'block';
-
-    document.getElementById('input_id').addEventListener('keydown', function(e) {
-        let time = Date.now() - start;
-        let key;
-        if (e.code === "Space") {
-            key = "Space";
-        } else {
-            key = e.key;
-        }
-        document.getElementById('keydowns_id').textContent += " " + key;
-        document.getElementById('keydownsms_id').textContent += " " + key + "[" + time + "]";
-    });
-    document.getElementById('input_id').addEventListener('keyup', function(e) {
-        let time = Date.now() - start;
-        let key;
-        if (e.code === "Space") {
-            key = "Space";
-        } else {
-            key = e.key;
-        }
-        document.getElementById('keyups_id').textContent += " " + key;
-        document.getElementById('keyupsms_id').textContent += " " + key + "[" + time + "]";
-    });
-
+    listeners();
+    let start = Date.now();
 });
-
 
 function consented() {
     document.getElementById('consent').style.display = 'none';
     document.getElementById('demographics').style.display = 'block';
     window.consent_now = Date.now();
+}
+
+function to_intro() {
+    document.getElementById('demographics').style.display = 'none';
+    document.getElementById('intro').style.display = 'block';
+    window.consent_now = Date.now();
+}
+
+function listeners() {
+    document.getElementById('input_id').addEventListener('keydown', function(e) {
+        let time = Date.now() - start;
+        let key;
+        if (listen) {
+            if (e.code === "Space") {
+                key = "Space";
+            } else {
+                key = e.key;
+            }
+        }
+    });
+    document.getElementById('input_id').addEventListener('keyup', function(e) {
+        let time = Date.now() - start;
+        let key;
+        if (listen) {
+            if (e.code === "Space") {
+                key = "Space";
+            } else {
+                key = e.key;
+            }
+        }
+    });
 }
 
 function neat_date() {
@@ -104,6 +117,7 @@ function ending() {
 }
 
 function upload() {
+    window.f_name = "";
     fetch('https://homepage.univie.ac.at/gaspar.lukacs/kb_id/kb_id.php', {
             method: 'post',
             headers: {
@@ -111,13 +125,13 @@ function upload() {
                 'Accept': 'text/plain'
             },
             body: JSON.stringify({
-                fname_post: "xx_20200205171353_KAN.txt",
-                results_post: "results bla".repeat(99)
+                fname_post: f_name,
+                results_post: subject_results
             })
         })
         .then(response => response.text())
-        .then(data => {
-            console.log(data);
+        .then(echoed => {
+            console.log(echoed);
         })
         .catch((error) => {
             console.log('Request failed', error);
@@ -152,3 +166,55 @@ var browser = (function() {
     if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
     return M;
 })();
+
+function mobile() {
+    return (window.matchMedia("only screen and (max-width: 760px)").matches);
+}
+
+
+var now = function() {
+    var performance = window.performance || {};
+    performance.now = (function() {
+        return (
+            performance.now ||
+            performance.webkitNow ||
+            performance.msNow ||
+            performance.oNow ||
+            performance.mozNow ||
+            function() {
+                return new Date().getTime();
+            }
+        );
+    })();
+    return performance.now();
+};
+
+let texts_lowfreq = ["The cat stretched", "Jacob stood on his tiptoes", "The car turned the corner", "Kelly twirled in circles", "She opened the door", "Aaron made a picture", "I rinsed and dried the dishes", "The decline of this country has already started"];
+
+let texts_highfreq = ["Joe stood up and spoke to the crowd", "The staff performed well", "A white shirt always looks sharp", "The pen is mightier than the sword", "Alice everyday goes to library to study", "The cat and the dog yowled and howled", "He was eating and talking", "The dog barked and ran"];
+
+let sections = [
+    [],
+    [],
+    [],
+    []
+];
+while (texts_lowfreq.length >= 4) {
+    [0, 1, 2, 3].forEach(indx => {
+        sections[indx].push([texts_lowfreq.shift(), 'low']);
+        sections[indx].push([texts_highfreq.shift(), 'high']);
+    });
+}
+[0, 1, 2, 3].forEach(x => {
+    sections[indx] = shuffle(sections[indx]);
+});
+
+let subject_results = [
+    'subject_id', 'section', 'trial', 'valid', 'upkeys', 'downkeys'
+].join("\t") + "\n";
+
+function add_response() {
+    subject_results += [
+        subject_id, trial, trial_stim, resp_valence, resp_arousal, resp_clarity
+    ].join("\t") + "\n";
+}
