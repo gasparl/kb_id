@@ -24,6 +24,32 @@ function to_intro() {
     window.consent_now = Date.now();
 }
 
+let sctn = 0;
+let trial = 0;
+
+function nexttrial() {
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('typingdiv').style.display = 'none';
+    document.getElementById('newsection').style.display = 'none';
+    if (sections[sctn].length > 0) {
+        trial++;
+        keysup = [];
+        keysdown = [];
+        window.testitem = sections[sctn].shift();
+        document.getElementById('tomemorize').textContent = testitem[0];
+        document.getElementById('memorize').style.display = 'block';
+    } else {
+        if (sctn < 4) {
+            sctn++;
+            trial = 0;
+            document.getElementById('newsection').style.display = 'block';
+        } else {
+            document.getElementById('end_id').style.display = 'block';
+        }
+    }
+}
+
+
 function listeners() {
     document.getElementById('input_id').addEventListener('keydown', function(e) {
         let time = Date.now() - start;
@@ -44,6 +70,19 @@ function listeners() {
                 key = "Space";
             } else {
                 key = e.key;
+            }
+        }
+    });
+
+    document.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') {
+            if (document.getElementById('memorize').style.display === 'block') {
+                document.getElementById('memorize').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById('typingdiv').style.display = 'block';
+                }, 100);
+            } else if (document.getElementById('typingdiv').style.display === 'block') {
+                nexttrial();
             }
         }
     });
@@ -205,16 +244,22 @@ while (texts_lowfreq.length >= 4) {
         sections[indx].push([texts_highfreq.shift(), 'high']);
     });
 }
-[0, 1, 2, 3].forEach(x => {
+[0, 1, 2, 3].forEach(indx => {
     sections[indx] = shuffle(sections[indx]);
 });
+examples = [
+    ["first example sentence (placeholder)", "NA"],
+    ["second example sentence (placeholder)", "NA"]
+];
+
+sections = examples.concat(sections);
 
 let subject_results = [
-    'subject_id', 'section', 'trial', 'valid', 'upkeys', 'downkeys'
+    'subject_id', 'section', 'trial', 'freq', 'valid', 'keysup', 'keysdown'
 ].join("\t") + "\n";
 
 function add_response() {
     subject_results += [
-        subject_id, trial, trial_stim, resp_valence, resp_arousal, resp_clarity
+        subject_id, sctn, trial, testitem[1], valid, keysup, keysdown
     ].join("\t") + "\n";
 }
