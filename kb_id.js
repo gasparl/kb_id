@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         );
         window.location = end_url;
     }
-    document.getElementById('consent').style.display = 'block';
+    document.getElementById('typingdiv').style.display = 'block'; // default: consent
     listeners();
     let start = Date.now();
 });
@@ -85,6 +85,15 @@ function listeners() {
                 nexttrial();
             }
         }
+    });
+
+    document.getElementById('typingdiv').onpaste = function(e) {
+        e.preventDefault();
+    };
+    ['ondrop', 'onpaste', 'oncopy', 'oncut'].forEach(on_ev => {
+        document.getElementById('typingdiv')[on_ev] = function(e) {
+            e.preventDefault();
+        };
     });
 }
 

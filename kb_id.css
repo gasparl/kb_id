@@ -28,7 +28,7 @@ body {
     margin-right: 20%;
 }
 
-.longtext{
+.longtext {
     text-align: justify;
 }
 
@@ -43,4 +43,5 @@ button {
 
 input {
     font-size: 110%;
+    text-transform: lowercase;
 }
