@@ -63,9 +63,9 @@ function validate() {
     chars_ent = entered.replace(/[^a-zA-Z]+/g, '');
     let feedwait = 2000;
     if (similarity < 25) {
-        feed.push("The sentence you wrote seems completely different from the original sentence. Please memorize and enter the sentences properly.");
+        feed.push("What you wrote seems completely different from the original sentence. Please memorize and enter the sentences properly.");
     } else if (similarity < 50) {
-        feed.push("The sentence you wrote seems very different from the original sentence. Please memorize and enter the sentences properly.");
+        feed.push("What you wrote seems very different from the original sentence. Please memorize and enter the sentences properly.");
     } else if (similarity < 75) {
         feed.push("The sentence you wrote seems quite different from the original sentence. Please memorize and enter the sentences properly.");
     } else if (similarity < 90) {
@@ -354,13 +354,13 @@ examples = [
 sections = examples.concat(sections);
 
 let subject_results = [
-    'subject_id', 'section', 'trial', 'freq', 'original', 'entered', 'similarity', 'valid', 'keysup', 'keysdown'
+    'subject_id', 'section', 'trial', 'freq', 'original', 'entered', 'similarity', 'valid', 'keysdown', 'keysup'
 ].join("\t") + "\n";
 
 function add_response(valid) {
     simil = (Math.round(similarity * 100) / 100).toFixed(2);
     subject_results += [
-        subject_id, sctn, trial, testitem[1], testitem[0], entered, simil, valid, keysup.join("|"), keysdown.join("|")
+        subject_id, sctn, trial, testitem[1], testitem[0], entered, simil, valid, keysdown.join("|"), keysup.join("|")
     ].join("\t") + "\n";
 }
 
