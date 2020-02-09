@@ -78,8 +78,10 @@ function listeners() {
         if (e.key === 'Enter') {
             if (document.getElementById('memorize').style.display === 'block') {
                 document.getElementById('memorize').style.display = 'none';
+                document.getElementById("input_id").value = "";
                 setTimeout(() => {
                     document.getElementById('typingdiv').style.display = 'block';
+                    document.getElementById("input_id").focus();
                 }, 100);
             } else if (document.getElementById('typingdiv').style.display === 'block') {
                 nexttrial();
@@ -257,8 +259,10 @@ while (texts_lowfreq.length >= 4) {
     sections[indx] = shuffle(sections[indx]);
 });
 examples = [
-    ["first example sentence (placeholder)", "NA"],
-    ["second example sentence (placeholder)", "NA"]
+    [
+        ["first example sentence (placeholder)", "NA"],
+        ["second example sentence (placeholder)", "NA"]
+    ]
 ];
 
 sections = examples.concat(sections);
