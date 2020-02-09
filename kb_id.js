@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         );
         window.location = end_url;
     }
-    document.getElementById('typingdiv').style.display = 'block'; // default: consent
+    document.getElementById('feedback').style.display = 'block'; // default: consent feedback
     listeners();
     let start = Date.now();
 });
@@ -31,6 +31,7 @@ function nexttrial() {
     document.getElementById('intro').style.display = 'none';
     document.getElementById('typingdiv').style.display = 'none';
     document.getElementById('newsection').style.display = 'none';
+    document.getElementById('feedback').style.display = 'none';
     if (sections[sctn].length > 0) {
         trial++;
         keysup = [];
@@ -49,42 +50,94 @@ function nexttrial() {
     }
 }
 
+function validate() {
+    let feed = [];
+    window.entered = document.getElementById("input_id").value;
+    let orig = testitem[0];
+    window.similarity = similar_text(entered, orig, true);
+    words_ori = orig.split(' ').length;
+    words_ent = entered.split(' ').length;
+    chars_ori = orig.replace(/[^a-zA-Z]+/g, '');
+    chars_ent = entered.replace(/[^a-zA-Z]+/g, '');
+    let feedwait = 2000;
+    if (similarity < 25) {
+        feed.push("The sentence you wrote seems completely different from the original sentence. Please memorize and enter the sentences properly.");
+    } else if (similarity < 50) {
+        feed.push("The sentence you wrote seems very different from the original sentence. Please memorize and enter the sentences properly.");
+    } else if (similarity < 75) {
+        feed.push("The sentence you wrote seems quite different from the original sentence. Please memorize and enter the sentences properly.");
+    } else if (similarity < 90) {
+        feed.push("The sentence you wrote has too many differences from the original sentence. Please pay closer attention.");
+        feedwait = 0;
+    }
+    if (words_ori - words_ent > 1) {
+        feed.push("The original sentence had " + words_ori + " words, but you only wrote " + words_ent + ". Please try to properly recall and enter the full sentence on each trial.");
+    } else if (chars_ent.length * 2 / 3 > chars_ori.length) {
+        feed.push("The original sentence was much longer than what you wrote. Please try to recall and enter the full sentence on each trial.");
+        feedwait += 2000;
+    }
+    if (feed.length > 0) {
+        add_response('0');
+        document.getElementById("feed_okbutton").disabled = true;
+        document.getElementById("feed_id").innerHTML = feed.join("<br><br>");
+        document.getElementById('typingdiv').style.display = 'none';
+        document.getElementById('feedback').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById("feed_okbutton").disabled = false;
+        }, feedwait);
+    } else {
+        add_response('1');
+        nexttrial();
+    }
+}
+
+let start;
+let listenkey = false;
+
+function start_typing() {
+    document.getElementById('memorize').style.display = 'none';
+    document.getElementById("input_id").value = "";
+    setTimeout(() => {
+        start = now();
+        document.getElementById('typingdiv').style.display = 'block';
+        document.getElementById("input_id").focus();
+        listenkey = true;
+    }, 100);
+}
 
 function listeners() {
     document.getElementById('input_id').addEventListener('keydown', function(e) {
-        let time = Date.now() - start;
+        let time = now() - start;
         let key;
-        if (listen) {
+        if (listenkey) {
             if (e.code === "Space") {
                 key = "Space";
             } else {
                 key = e.key;
             }
         }
+        keysdown.push(key);
     });
     document.getElementById('input_id').addEventListener('keyup', function(e) {
-        let time = Date.now() - start;
+        let time = now() - start;
         let key;
-        if (listen) {
+        if (listenkey) {
             if (e.code === "Space") {
                 key = "Space";
             } else {
                 key = e.key;
             }
         }
+        keysup.push(key);
     });
 
     document.addEventListener('keyup', function(e) {
         if (e.key === 'Enter') {
             if (document.getElementById('memorize').style.display === 'block') {
-                document.getElementById('memorize').style.display = 'none';
-                document.getElementById("input_id").value = "";
-                setTimeout(() => {
-                    document.getElementById('typingdiv').style.display = 'block';
-                    document.getElementById("input_id").focus();
-                }, 100);
+                start_typing();
             } else if (document.getElementById('typingdiv').style.display === 'block') {
-                nexttrial();
+                listenkey = false;
+                validate();
             }
         }
     });
@@ -218,7 +271,7 @@ var browser = (function() {
 })();
 
 function mobile() {
-    return (window.matchMedia("only screen and (max-width: 760px)").matches);
+    return (window.matchMedia("only screen and (max-width: 590px)").matches);
 }
 
 
@@ -268,11 +321,64 @@ examples = [
 sections = examples.concat(sections);
 
 let subject_results = [
-    'subject_id', 'section', 'trial', 'freq', 'valid', 'keysup', 'keysdown'
+    'subject_id', 'section', 'trial', 'freq', 'original', 'entered', 'similarity', 'valid', 'keysup', 'keysdown'
 ].join("\t") + "\n";
 
-function add_response() {
+function add_response(valid) {
+    simil = (Math.round(similarity * 100) / 100).toFixed(2);
     subject_results += [
-        subject_id, sctn, trial, testitem[1], valid, keysup, keysdown
+        subject_id, sctn, trial, testitem[1], testitem[0], entered, simil, valid, keysup.join("|"), keysdown.join("|")
     ].join("\t") + "\n";
+}
+
+function similar_text(first, second, percent) {
+    // Programming Classics: Implementing the World's Best Algorithms by Oliver (ISBN 0-131-00413-1)
+    // https://www.php.net/manual/en/function.similar-text.php
+    if (first === null || second === null || typeof first === 'undefined' || typeof second === 'undefined') {
+        return 0;
+    }
+
+    first += '';
+    second += '';
+
+    var pos1 = 0,
+        pos2 = 0,
+        max = 0,
+        firstLength = first.length,
+        secondLength = second.length,
+        p, q, l, sum;
+
+    max = 0;
+
+    for (p = 0; p < firstLength; p++) {
+        for (q = 0; q < secondLength; q++) {
+            for (l = 0;
+                (p + l < firstLength) && (q + l < secondLength) && (first.charAt(p + l) === second.charAt(q + l)); l++)
+            ;
+            if (l > max) {
+                max = l;
+                pos1 = p;
+                pos2 = q;
+            }
+        }
+    }
+
+    sum = max;
+
+    if (sum) {
+        if (pos1 && pos2) {
+            sum += this.similar_text(first.substr(0, pos1), second.substr(0, pos2));
+        }
+
+        if ((pos1 + max < firstLength) && (pos2 + max < secondLength)) {
+            sum += this.similar_text(first.substr(pos1 + max, firstLength - pos1 - max), second.substr(pos2 + max,
+                secondLength - pos2 - max));
+        }
+    }
+
+    if (!percent) {
+        return sum;
+    } else {
+        return (sum * 200) / (firstLength + secondLength);
+    }
 }

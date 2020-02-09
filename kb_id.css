@@ -30,6 +30,7 @@ body {
 
 .longtext {
     text-align: justify;
+    line-height: 150%;
 }
 
 button {
