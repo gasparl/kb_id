@@ -47,7 +47,7 @@ function nexttrial() {
             document.getElementById('newsection').style.display = 'block';
             document.getElementById('section_text').innerHTML = blocktexts.shift();
         } else {
-            document.getElementById('end_id').style.display = 'block';
+            document.getElementById('motiv_id').style.display = 'block';
         }
     }
 }
@@ -110,6 +110,7 @@ function start_typing() {
 function listeners() {
     document.getElementById('input_id').addEventListener('keydown', function(e) {
         let time = now() - start;
+        time = Math.round(time * 1000);
         let key;
         if (listenkey) {
             if (e.code === "Space") {
@@ -122,6 +123,7 @@ function listeners() {
     });
     document.getElementById('input_id').addEventListener('keyup', function(e) {
         let time = now() - start;
+        time = Math.round(time * 1000);
         let key;
         if (listenkey) {
             if (e.code === "Space") {
@@ -130,7 +132,7 @@ function listeners() {
                 key = e.key;
             }
         }
-        keysdown.push(key + '&' + time);
+        keysup.push(key + '&' + time);
     });
 
     document.addEventListener('keyup', function(e) {
@@ -176,9 +178,12 @@ var subject_id =
 function prep_cond() {
     window.fakedsection = rchoice([1, 2, 3, 4]);
     let beginning = "The remaining test will be the same, but it will consist of four sections. You will receive instructions before each section separately.<br><br>";
-    let fakeit = "In this section, <b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation where you engage in a serious illegal activity while using your computer (e.g. drafting a plan for a terrorist attack or arranging a contract murder via chat messages) and it is important for you to hide your identity, which may be detected based on the way you type. Therefore, you want to type differently from how you normally would.";
-    window.blocktexts = ["In this section, <b>please type just as you normally would</b>. This represents a scenario where you simply use the computer in a regular situation (e.g. drafting a document for your legal work or writing casual chat messages) and you have nothing important to hide.", "In this section, <b>again please type just as you normally would</b>. (This again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)", "In this section, <b>again please type just as you normally would</b>. (This once again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)"];
+    let fakeit = "<b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation where you engage in a serious illegal activity while using your computer (e.g. drafting a plan for a terrorist attack or arranging a contract murder via chat messages) and it is important for you to hide your identity, which may be detected based on the way you type. Therefore, you want to type differently from how you normally would.";
+    window.blocktexts = ["<b>please type just as you normally would</b>. This represents a scenario where you simply use the computer in a regular situation (e.g. drafting a document for your legal work or writing casual chat messages) and you have nothing important to hide.", "In this section, <b>again please type just as you normally would</b>. (This again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)", "<b>again please type just as you normally would</b>. (This once again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)"];
     blocktexts.splice(fakedsection - 1, 0, fakeit);
+    ['first', 'second', 'third', 'fourth'].forEach((sectnum, indx) => {
+        blocktexts[indx] = 'In this ' + sectnum + ' section, ' + blocktexts[indx];
+    });
     blocktexts[0] = beginning + blocktexts[0];
 }
 
@@ -205,7 +210,14 @@ function endtask() {
     document.getElementById('motiv_id').style.display = 'none';
     document.getElementById('end_id').style.display = 'block';
     var duration_full = Math.round((Date.now() - consent_now) / 600) / 100;
-    ratings += 'dems\t' + [
+    genderchecked = document.querySelector('input[name="gender"]:checked');
+    let ge;
+    if (genderchecked) {
+        ge = genderchecked.value;
+    } else {
+        ge = "";
+    }
+    subject_results += 'dems\t' + [
             'subject_id',
             'fakedsection',
             'gender',
@@ -218,8 +230,8 @@ function endtask() {
         '\t' + [
             subject_id,
             fakedsection,
-            $('input[name=gender]:checked').val(),
-            $("#age").val(),
+            ge,
+            document.getElementById('age').value,
             browser[0],
             browser[1],
             document.getElementById("effort_id").value,
@@ -228,14 +240,11 @@ function endtask() {
     window.f_name =
         'kb_id_' +
         subject_id +
-        "_" +
-        fakedsection +
         ".txt";
     upload();
 }
 
 function upload() {
-    window.f_name = "";
     fetch('https://homepage.univie.ac.at/gaspar.lukacs/kb_id/kb_id.php', {
             method: 'post',
             headers: {
@@ -266,7 +275,7 @@ function upload() {
 }
 
 function dl_as_file() {
-    var blobx = new Blob([ratings], {
+    var blobx = new Blob([subject_results], {
         type: 'text/plain'
     });
     var elemx = window.document.createElement('a');
