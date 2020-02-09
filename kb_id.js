@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         );
         window.location = end_url;
     }
-    document.getElementById('feedback').style.display = 'block'; // default: consent feedback
+    document.getElementById('motiv_id').style.display = 'block'; // default: consent feedback
     listeners();
     let start = Date.now();
 });
@@ -190,7 +190,9 @@ function shuffle(arr) {
 }
 
 
-function ending() {
+function endtask() {
+    document.getElementById('motiv_id').style.display = 'none';
+    document.getElementById('end_id').style.display = 'block';
     var duration_full = Math.round((Date.now() - consent_now) / 600) / 100;
     ratings += 'dems\t' + [
             'subject_id',
@@ -199,6 +201,7 @@ function ending() {
             'age',
             'browser_name',
             'browser_version',
+            'effort',
             'full_dur'
         ].join('/') +
         '\t' + [
@@ -208,6 +211,7 @@ function ending() {
             $("#age").val(),
             browser[0],
             browser[1],
+            document.getElementById("effort_id").value,
             duration_full
         ].join('/');
     window.f_name =
@@ -235,9 +239,18 @@ function upload() {
         .then(response => response.text())
         .then(echoed => {
             console.log(echoed);
+            if (echoed.startsWith("Fail")) {
+                document.getElementById('div_end_error').style.display = 'block';
+                // $("#passw_display").html("<i>(data saving error)</i>");
+            } else {
+                document.getElementById('div_end_error').style.display = 'block';
+                // $("#passw_display").html(echoed);
+            }
         })
         .catch((error) => {
-            console.log('Request failed', error);
+            console.log('Request failed: ', error);
+            document.getElementById('div_end_error').style.display = 'block';
+            // $("#passw_display").html("<i>(server connection failed)</i>");
         });
 }
 
@@ -271,7 +284,7 @@ var browser = (function() {
 })();
 
 function mobile() {
-    return (window.matchMedia("only screen and (max-width: 590px)").matches);
+    return (window.matchMedia("only screen and (max-width: 650px)").matches);
 }
 
 
@@ -292,9 +305,9 @@ var now = function() {
     return performance.now();
 };
 
-let texts_lowfreq = ["The cat stretched", "Jacob stood on his tiptoes", "The car turned the corner", "Kelly twirled in circles", "She opened the door", "Aaron made a picture", "I rinsed and dried the dishes", "The decline of this country has already started"];
+let texts_lowfreq = ["the cat stretched", "jacob stood on his tiptoes", "the car turned the corner", "kelly twirled in circles", "she opened the door", "the boy made a picture", "she rinsed and dried the dishes", "the decline of this country has already started"];
 
-let texts_highfreq = ["Joe stood up and spoke to the crowd", "The staff performed well", "A white shirt always looks sharp", "The pen is mightier than the sword", "Alice everyday goes to library to study", "The cat and the dog yowled and howled", "He was eating and talking", "The dog barked and ran"];
+let texts_highfreq = ["joe stood up and spoke to the crowd", "the staff performed well", "a white shirt always looks sharp", "the pen is mightier than the sword", "alice everyday goes to library to study", "the cat and the dog yowled and howled", "he was eating and talking", "the dog barked and ran"];
 
 let sections = [
     [],
@@ -313,8 +326,8 @@ while (texts_lowfreq.length >= 4) {
 });
 examples = [
     [
-        ["first example sentence (placeholder)", "NA"],
-        ["second example sentence (placeholder)", "NA"]
+        ["the sky is blue", "NA"],
+        ["the frog jumped and landed in the pond", "NA"]
     ]
 ];
 
@@ -329,6 +342,11 @@ function add_response(valid) {
     subject_results += [
         subject_id, sctn, trial, testitem[1], testitem[0], entered, simil, valid, keysup.join("|"), keysdown.join("|")
     ].join("\t") + "\n";
+}
+
+function slideclicked() {
+    document.getElementById("effort_id").classList.remove("slider_hide_thumb");
+    document.getElementById('endbutton').style.visibility = 'visible';
 }
 
 function similar_text(first, second, percent) {

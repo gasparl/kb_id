@@ -4,11 +4,12 @@
     <title>Typing Study</title>
     <link rel="icon" type="image/png" href="lgo.png">
     <meta charset="UTF-8">
+    <meta name="google" content="notranslate">
     <script src="./kb_id.js"></script>
     <link href="./kb_id.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body class="notranslate">
     <div id="div_end_error" style="background:red;color:black;font-size:2.2vw;display:none;position:absolute;z-index:100;" onclick="dl_as_file()">Data cannot be saved on the server. <b>Click anywhere on this text to save your data manually.</b>
         (You must allow pop-ups.) If this is live testing, send the data to lkcsgaspar@gmail.com (or contact in case of further issues).
     </div>
@@ -73,7 +74,8 @@
             Example: (1) The text "the sky is blue" appears. (2) You press enter. (3) The text "the sky is blue" disappears and you have a textbox where you have to type "the sky is blue".
             <br>
             <br>
-            Please try to be accurate, but do not worry about small mistakes. Occasional typos, e.g. "bleu" or "blu" instead of "blue", are acceptable. However, if your typed text is very different from the original text, a warning screen will be displayed (and you may have to wait a few seconds before continuing).
+            Please try to be accurate, but do not worry about small mistakes. Occasional typos, e.g. "bleu" or "blu" instead of "blue", are acceptable. However, if your typed text is very different from the original text, a warning screen will be
+            displayed (and you may have to wait a few seconds before continuing).
             <br>
             <br>
             Please use lowercase letters only. (Hence, do not use <i>Shift</i> or <i>Caps Lock</i>). Copy-pasting is disabled, and you should not try using it.
@@ -141,6 +143,32 @@
         <br>
         <br>
         <button type="button" id="feed_okbutton" onclick="nexttrial();">OK</button>
+    </div>
+
+
+    <div id="motiv_id" class="defau">
+        <div class="longtext">
+            Lastly, please let us know how hard you tried to fake your identity (in the one section you were asked to do this). In other words, how much of an effort did you make to fake the way you type? Choose any point on the scale below.
+        </div>
+        <br>
+        <br>
+        <i>Please be honest. Your response will not affect you in any way.</i>
+        <br>
+        <br>
+        <br>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="50" class="slider slider_hide_thumb" id="effort_id" onclick="slideclicked()">
+            <div class="sliderticks">
+                <p>No effort at all</p>
+                <p>Slight effort</p>
+                <p>Fair effort</p>
+                <p>Serious effort</p>
+                <p>Best effort possible</p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <button style="visibility:hidden;" id="endbutton" onclick="endtask();">OK</button>
     </div>
 
     <div id="end_id" class="defau">
