@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function() {
         );
         window.location = end_url;
     }
-    document.getElementById('motiv_id').style.display = 'block'; // default: consent feedback
+    prep_cond();
     listeners();
-    let start = Date.now();
+    document.getElementById('consent').style.display = 'block'; // default: consent feedback typingdiv
 });
 
 function consented() {
@@ -26,6 +26,7 @@ function to_intro() {
 
 let sctn = 0;
 let trial = 0;
+let keysup, keysdown;
 
 function nexttrial() {
     document.getElementById('intro').style.display = 'none';
@@ -44,6 +45,7 @@ function nexttrial() {
             sctn++;
             trial = 0;
             document.getElementById('newsection').style.display = 'block';
+            document.getElementById('section_text').innerHTML = blocktexts.shift();
         } else {
             document.getElementById('end_id').style.display = 'block';
         }
@@ -116,7 +118,7 @@ function listeners() {
                 key = e.key;
             }
         }
-        keysdown.push(key);
+        keysdown.push(key + '&' + time);
     });
     document.getElementById('input_id').addEventListener('keyup', function(e) {
         let time = now() - start;
@@ -128,14 +130,14 @@ function listeners() {
                 key = e.key;
             }
         }
-        keysup.push(key);
+        keysdown.push(key + '&' + time);
     });
 
     document.addEventListener('keyup', function(e) {
         if (e.key === 'Enter') {
             if (document.getElementById('memorize').style.display === 'block') {
                 start_typing();
-            } else if (document.getElementById('typingdiv').style.display === 'block') {
+            } else if (document.getElementById('typingdiv').style.display === 'block' && document.getElementById("input_id").value.length > 4) {
                 listenkey = false;
                 validate();
             }
@@ -170,6 +172,15 @@ var subject_id =
     rchoice("CDFGHJKLMNPQRSTVWXZ") +
     rchoice("AEIOUY") +
     rchoice("CDFGHJKLMNPQRSTVWXZ") + '_' + neat_date();
+
+function prep_cond() {
+    window.fakedsection = rchoice([1, 2, 3, 4]);
+    let beginning = "The remaining test will be the same, but it will consist of four sections. You will receive instructions before each section separately.<br><br>";
+    let fakeit = "In this section, <b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation where you engage in a serious illegal activity while using your computer (e.g. drafting a plan for a terrorist attack or arranging a contract murder via chat messages) and it is important for you to hide your identity, which may be detected based on the way you type. Therefore, you want to type differently from how you normally would.";
+    window.blocktexts = ["In this section, <b>please type just as you normally would</b>. This represents a scenario where you simply use the computer in a regular situation (e.g. drafting a document for your legal work or writing casual chat messages) and you have nothing important to hide.", "In this section, <b>again please type just as you normally would</b>. (This again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)", "In this section, <b>again please type just as you normally would</b>. (This once again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)"];
+    blocktexts.splice(fakedsection - 1, 0, fakeit);
+    blocktexts[0] = beginning + blocktexts[0];
+}
 
 // shuffle array function
 function shuffle(arr) {
