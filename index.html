@@ -25,7 +25,7 @@
                 of
                 the study, you will be asked to try to fake the way you type. In the rest of the study, you will be asked to type as you normally would.</p>
             <p><b>Payment and Rules:</b>
-                <br>The test takes around 20-25 minutes. Completed and valid participation will be rewarded with $3.00 gross. You can stop participating in the study (by closing or refreshing the website) at any time, and without giving reasons. In
+                <br>The test takes around 20-25 minutes. (Not counting any voluntary short breaks during testing, which you may take any time.) Completed and valid participation will be rewarded with $3.00 gross. You can stop participating in the study (by closing or refreshing the website) at any time, and without giving reasons. In
                 that
                 case,
                 all your data will be erased, and you will not receive payment.</p>
@@ -44,24 +44,6 @@
         </div>
 
         <button onclick='consented();'>Consent</button>
-    </div>
-
-    <div id="demographics" class="defau">
-        <p>Please let us know your gender and age.</p>
-        <br />
-        <p><b>Gender:</b></p>
-        <input type="radio" name="gender" value="1"> Male
-        <input type="radio" name="gender" value="2"> Female
-        <br>
-        <br>
-        <p><b>Age:</b></p>
-        <input type="number" min="10" max="100" id="age">
-        <br>
-        <br>
-        <br>
-        <button onclick='to_intro();'>OK</button>
-        <br>
-        <br>
     </div>
 
     <div id="intro" class="defau_long">
@@ -160,7 +142,15 @@
     </div>
 
     <div id="end_id" class="defau">
-        <h3>The test is completed, thank you for your participation.</h3>
+        <h3>
+            The test is completed, thank you very much for your participation!
+            <br>
+            <br>
+            <span id="pass_pre">Please open the following link to receive payment via Prolific:</span> <span id="pass_id"></span>
+            <br>
+            <br>
+            If you have any questions or experience any issues, you can use the contact given in the beginning (gaspar.lukacs @ univie.ac.at).
+        </h3>
     </div>
 
 </body>

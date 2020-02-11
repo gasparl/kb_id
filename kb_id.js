@@ -14,12 +14,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function consented() {
     document.getElementById('consent').style.display = 'none';
-    document.getElementById('demographics').style.display = 'block';
-    window.consent_now = Date.now();
-}
-
-function to_intro() {
-    document.getElementById('demographics').style.display = 'none';
     document.getElementById('intro').style.display = 'block';
     window.consent_now = Date.now();
 }
@@ -264,16 +258,17 @@ function upload() {
             console.log(echoed);
             if (echoed.startsWith("Fail")) {
                 document.getElementById('div_end_error').style.display = 'block';
-                // $("#passw_display").html("<i>(data saving error)</i>");
+                document.getElementById('pass_pre').style.color = 'red';
+                document.getElementById('pass_pre').innerHTML = echoed;
             } else {
-                document.getElementById('div_end_error').style.display = 'block';
-                // $("#passw_display").html(echoed);
+                document.getElementsByTagName('body')[0].innerHTML += '<a href="' + echoed + '">' + echoed + '</a>';
             }
         })
         .catch((error) => {
             console.log('Request failed: ', error);
+            document.getElementById('pass_pre').style.color = 'red';
+            document.getElementById('pass_pre').innerHTML = 'Server connection failed!' + error;
             document.getElementById('div_end_error').style.display = 'block';
-            // $("#passw_display").html("<i>(server connection failed)</i>");
         });
 }
 
