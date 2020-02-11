@@ -111,6 +111,7 @@ function listeners() {
     document.getElementById('input_id').addEventListener('keydown', function(e) {
         let time = now() - start;
         time = Math.round(time * 1000);
+        let keycode = e.which || e.keyCode || 0;
         let key;
         if (listenkey) {
             if (e.code === "Space") {
@@ -119,11 +120,12 @@ function listeners() {
                 key = e.key;
             }
         }
-        keysdown.push(key + '&' + time);
+        keysdown.push(key + '&' + e.code + '&' + keycode + '&' + time);
     });
     document.getElementById('input_id').addEventListener('keyup', function(e) {
         let time = now() - start;
         time = Math.round(time * 1000);
+        let keycode = e.which || e.keyCode || 0;
         let key;
         if (listenkey) {
             if (e.code === "Space") {
@@ -132,11 +134,12 @@ function listeners() {
                 key = e.key;
             }
         }
-        keysup.push(key + '&' + time);
+        keysup.push(key + '&' + e.code + '&' + keycode + '&' + time);
     });
 
     document.addEventListener('keyup', function(e) {
-        if (e.key === 'Enter') {
+        let keycode = e.which || e.keyCode || 0;
+        if (e.key === 'Enter' || keycode === 13) {
             if (document.getElementById('memorize').style.display === 'block') {
                 start_typing();
             } else if (document.getElementById('typingdiv').style.display === 'block' && document.getElementById("input_id").value.length > 4) {
