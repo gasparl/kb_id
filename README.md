@@ -1,1 +1,1 @@
-Keyboard-based identification experiment - faking one's way of typing
+Keyboard-based detection of identity - faking one's way of typing
