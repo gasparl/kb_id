@@ -261,13 +261,13 @@ function upload() {
                 document.getElementById('pass_pre').style.color = 'red';
                 document.getElementById('pass_pre').innerHTML = echoed;
             } else {
-                document.getElementsByTagName('body')[0].innerHTML += '<a href="' + echoed + '">' + echoed + '</a>';
+                document.getElementById('pass_id').innerHTML = '<a href="' + echoed + '" target="_blank" rel="noopener noreferrer">' + echoed + '</a>';
             }
         })
         .catch((error) => {
             console.log('Request failed: ', error);
             document.getElementById('pass_pre').style.color = 'red';
-            document.getElementById('pass_pre').innerHTML = 'Server connection failed!' + error;
+            document.getElementById('pass_pre').innerHTML = 'Server connection failed! ' + error;
             document.getElementById('div_end_error').style.display = 'block';
         });
 }
