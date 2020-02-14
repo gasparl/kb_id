@@ -37,6 +37,11 @@ function nexttrial() {
     } else {
         if (sctn < sections.length) {
             sctn++;
+            if (sctn === fakedsection) {
+                window.add_f = "f";
+            } else {
+                window.add_f = "";
+            }
             trial = 0;
             document.getElementById('newsection').style.display = 'block';
             document.getElementById('section_text').innerHTML = blocktexts.shift();
@@ -207,18 +212,9 @@ function endtask() {
     document.getElementById('motiv_id').style.display = 'none';
     document.getElementById('end_id').style.display = 'block';
     var duration_full = Math.round((Date.now() - consent_now) / 600) / 100;
-    genderchecked = document.querySelector('input[name="gender"]:checked');
-    let ge;
-    if (genderchecked) {
-        ge = genderchecked.value;
-    } else {
-        ge = "";
-    }
     subject_results += 'dems\t' + [
             'subject_id',
             'fakedsection',
-            'gender',
-            'age',
             'browser_name',
             'browser_version',
             'effort',
@@ -227,8 +223,6 @@ function endtask() {
         '\t' + [
             subject_id,
             fakedsection,
-            ge,
-            document.getElementById('age').value,
             browser[0],
             browser[1],
             document.getElementById("effort_id").value,
@@ -340,8 +334,8 @@ const section_numbers = [0, 1, 2];
 
 while (texts_informal.length >= section_numbers.length) {
     section_numbers.forEach(indx => {
-        sections[indx].push([texts_informal.shift(), 'informal']);
-        sections[indx].push([texts_formal.shift(), 'formal']);
+        sections[indx].push([texts_informal.shift(), 'informal', indx + 1]);
+        sections[indx].push([texts_formal.shift(), 'formal', indx + 1]);
     });
 }
 section_numbers.forEach(indx => {
@@ -358,13 +352,13 @@ examples = [
 sections = examples.concat(sections);
 
 let subject_results = [
-    'subject_id', 'section', 'trial', 'type', 'original', 'entered', 'similarity', 'valid', 'keysdown', 'keysup'
+    'subject_id', 'section', 'trial', 'type', 'sect_code', 'original', 'entered', 'similarity', 'valid', 'keysdown', 'keysup'
 ].join("\t") + "\n";
 
 function add_response(valid) {
     simil = (Math.round(similarity * 100) / 100).toFixed(2);
     subject_results += [
-        subject_id, sctn, trial, testitem[1], testitem[0], entered, simil, valid, keysdown.join("|"), keysup.join("|")
+        subject_id, sctn, trial, testitem[1], testitem[2] + add_f, testitem[0], entered, simil, valid, keysdown.join("|"), keysup.join("|")
     ].join("\t") + "\n";
 }
 
