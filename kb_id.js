@@ -35,7 +35,7 @@ function nexttrial() {
         document.getElementById('tomemorize').textContent = testitem[0];
         document.getElementById('memorize').style.display = 'block';
     } else {
-        if (sctn < 4) {
+        if (sctn < sections.length) {
             sctn++;
             trial = 0;
             document.getElementById('newsection').style.display = 'block';
@@ -173,12 +173,12 @@ var subject_id =
     rchoice("CDFGHJKLMNPQRSTVWXZ") + '_' + neat_date();
 
 function prep_cond() {
-    window.fakedsection = rchoice([1, 2, 3, 4]);
-    let beginning = "The remaining test will be the same, but it will consist of four sections. You will receive instructions before each section separately.<br><br>";
+    window.fakedsection = rchoice([1, 2, 3]);
+    let beginning = "The remaining test will be the same, but it will consist of three sections. You will receive instructions before each section separately.<br><br>";
     let fakeit = "<b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation where you engage in a serious illegal activity while using your computer (e.g. drafting a plan for a terrorist attack or arranging a contract murder via chat messages) and it is important for you to hide your identity, which may be detected based on the way you type. Therefore, you want to type differently from how you normally would.";
-    window.blocktexts = ["<b>please type just as you normally would</b>. This represents a scenario where you simply use the computer in a regular situation (e.g. drafting a document for your legal work or writing casual chat messages) and you have nothing important to hide.", "<b>again please type just as you normally would</b>. (This again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)", "<b>again please type just as you normally would</b>. (This once again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)"];
+    window.blocktexts = ["<b>please type just as you normally would</b>. This represents a scenario where you simply use the computer in a regular situation (e.g. drafting a document for your legal work or writing casual chat messages) and you have nothing important to hide.", "<b>again please type just as you normally would</b>. (This again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)"];
     blocktexts.splice(fakedsection - 1, 0, fakeit);
-    ['first', 'second', 'third', 'fourth'].forEach((sectnum, indx) => {
+    ['first', 'second', 'third'].forEach((sectnum, indx) => {
         blocktexts[indx] = 'In this ' + sectnum + ' section, ' + blocktexts[indx];
     });
     blocktexts[0] = beginning + blocktexts[0];
@@ -323,36 +323,42 @@ var now = function() {
     return performance.now();
 };
 
-let texts_lowfreq = ["the cat stretched", "jacob stood on his tiptoes", "the car turned the corner", "kelly twirled in circles", "she opened the door", "the boy made a picture", "she rinsed and dried the dishes", "the decline of this country has already started"];
+let texts_informal = ["all i want is to find the man i love.", "all my life i said i wanted to get to this one!", "among languages, it is best never to meet.", "and then they go out to the bogs and marshes", "asked if i thought it would be for vanity's sake.", "because the procedure can be used for anything", "claiming that we are here to see her.", "come on, i don’t have any comments.", "finished working on the house in those days.", "found out how to put it all together.", "go through all, and see if he'll carry it.", "he kept trying to get a haircut!", "he opened the door to speak to you.", "he recorded it a few days after reading", "he recorded it a few days ago.", "he spoke the last word in any argument.", "he told them to knock it off and take a step up.", "i constantly tried to get into your house.", "i didn’t know where i was gonna go.", "i don’t know how it is that wrinkles don't hurt.", "i don’t know how to find him.", "i had, it is true, told her that she should", "i hope you can keep up! lets go!", "i let go, and he fell in love.", "i like life on the home front.", "i really don’t want to be that guy.", "i told them to knock it off and take a step up.", "it was a long walk back to my barracks", "it's hard to find a vampire at her side.", "just try it for a long trip home", "life is going to change the future.", "maybe we did have a dramatic quality.", "mine are the ones that might be too", "omg haha i should be asking you.", "or muscatel, on the other side of the wall.", "our souls in such a short time", "reserved for members of the families he butchered.", "she stops in the middle of the road.", "sometimes we stopped to take a step up!", "teach him how to fish, and he will eat for a day.", "that is classic. and i must enact every cliche.", "the cave was the home of a missionary.", "the next day he hears a knock on the door again.", "thirty-five percent of the speed", "too bad there's not a way to tie this in nicely.", "we slipped through the filter.", "we won’t be able to get local agriculture", "we're not out of this ship", "when i had told her all that i needed to move on.", "you found a way to shout louder", "you'd be interested in the study in england"];
 
-let texts_highfreq = ["joe stood up and spoke to the crowd", "the staff performed well", "a white shirt always looks sharp", "the pen is mightier than the sword", "alice everyday goes to library to study", "the cat and the dog yowled and howled", "he was eating and talking", "the dog barked and ran"];
+let texts_formal = ["adequate charges to cover the card", "ambassador to the united states.", "analysis of the first theme in the recapitulation", "and also i will be making a powerpoint.", "at last you won't be inundated with solicitations.", "at one time it was a means of portraiture", "auction book from last year's $1.55 billion.", "away to protect ocean wildlife.", "bring binoculars for the annual maiden’s festival.", "cannot afford to have a tree-lined boulevard", "coordinated events such as film festivals.", "dramatically improve the lives of at-risk youth", "emphasized that it was not until 1829", "example 2: harmonic structure of this movement.", "has been referred to as privileged", "have access to the information", "he said that they had overstayed", "homosexual, and founder of the chinese peasantry.", "honors the founder of the first movement", "however, it is at the very end of the city.", "i think that there are logical sub-figures", "i wanted to be a natural behavior.", "if you want to have a formidable adversary", "in-nest navigation will be a very simple function.", "intensity ratio of d1 over d2 was 1.6.", "it is fascinating to watch the bananas grow.", "it is time to move to a ‘maintenance’ stage.", "it strays from reason in the way of amending ab1x.", "most say they're driven by the 2.2% absolute", "my house was built in 1931", "next, we will cite some of the analysis", "once again, please accept my personal “thank you!”", "people may not need to cause a crisis.", "perhaps one may have a greater effect", "read just what people tell on this stuff:", "responding to a wave of popular support.", "some would say it is a long, hard", "spring right around the corner.", "strong behavior of the female ice dancer", "systems in their own backyards.", "temple was on the trading routes", "the effect sizes are shown in tables 2 and 3.", "the food may not live up to their european models.", "the issue came up in her suspension", "the return to b in the exposition.", "there are only a few days to live.", "those included costs associated with its power", "those were the first to experience it!", "tourist district, it is full of giant malls.", "we are committed to the concept of contract", "you into the ranks of tax payers"];
+
+texts_formal = texts_formal.sort((a, b) => a.length - b.length);
+texts_informal = texts_informal.sort((a, b) => a.length - b.length);
 
 let sections = [
     [],
     [],
-    [],
     []
 ];
-while (texts_lowfreq.length >= 4) {
-    [0, 1, 2, 3].forEach(indx => {
-        sections[indx].push([texts_lowfreq.shift(), 'low']);
-        sections[indx].push([texts_highfreq.shift(), 'high']);
+
+const section_numbers = [0, 1, 2];
+
+while (texts_informal.length >= section_numbers.length) {
+    section_numbers.forEach(indx => {
+        sections[indx].push([texts_informal.shift(), 'informal']);
+        sections[indx].push([texts_formal.shift(), 'formal']);
     });
 }
-[0, 1, 2, 3].forEach(indx => {
+section_numbers.forEach(indx => {
     sections[indx] = shuffle(sections[indx]);
 });
+sections = shuffle(sections);
 examples = [
     [
-        ["the sky is blue", "NA"],
-        ["the frog jumped and landed in the pond", "NA"]
+        ["never represented a majority of the council", "NA"],
+        ["i didn’t know where i was gonna go.", "NA"]
     ]
 ];
 
 sections = examples.concat(sections);
 
 let subject_results = [
-    'subject_id', 'section', 'trial', 'freq', 'original', 'entered', 'similarity', 'valid', 'keysdown', 'keysup'
+    'subject_id', 'section', 'trial', 'type', 'original', 'entered', 'similarity', 'valid', 'keysdown', 'keysup'
 ].join("\t") + "\n";
 
 function add_response(valid) {
