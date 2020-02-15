@@ -35,7 +35,7 @@ function nexttrial() {
         document.getElementById('tomemorize').textContent = testitem[0];
         document.getElementById('memorize').style.display = 'block';
     } else {
-        if (sctn < sections.length) {
+        if (sctn < sections.length - 1) {
             sctn++;
             if (sctn === fakedsection) {
                 add_f = "f";
