@@ -296,7 +296,7 @@ var browser = (function() {
 })();
 
 function mobile() {
-    return (window.matchMedia("only screen and (max-width: 590px)").matches);
+    return (window.matchMedia("only screen and (max-width: 590px)").matches || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 }
 
 
