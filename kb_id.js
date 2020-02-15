@@ -38,9 +38,9 @@ function nexttrial() {
         if (sctn < sections.length) {
             sctn++;
             if (sctn === fakedsection) {
-                window.add_f = "f";
+                add_f = "f";
             } else {
-                window.add_f = "";
+                add_f = "";
             }
             trial = 0;
             document.getElementById('newsection').style.display = 'block';
@@ -296,7 +296,7 @@ var browser = (function() {
 })();
 
 function mobile() {
-    return (window.matchMedia("only screen and (max-width: 650px)").matches);
+    return (window.matchMedia("only screen and (max-width: 590px)").matches);
 }
 
 
@@ -354,6 +354,8 @@ sections = examples.concat(sections);
 let subject_results = [
     'subject_id', 'section', 'trial', 'type', 'sect_code', 'original', 'entered', 'similarity', 'valid', 'keysdown', 'keysup'
 ].join("\t") + "\n";
+
+let add_f = "";
 
 function add_response(valid) {
     simil = (Math.round(similarity * 100) / 100).toFixed(2);
