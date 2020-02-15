@@ -344,8 +344,8 @@ section_numbers.forEach(indx => {
 sections = shuffle(sections);
 examples = [
     [
-        ["never represented a majority of the council", "NA"],
-        ["i didn’t know where i was gonna go.", "NA"]
+        ["never represented a majority of the council", "NA", 0],
+        ["i didn’t know where i was gonna go.", "NA", 0]
     ]
 ];
 
