@@ -92,14 +92,14 @@ function validate() {
     }
 }
 
-let start;
+let trial_start;
 let listenkey = false;
 
 function start_typing() {
     document.getElementById('memorize').style.display = 'none';
     document.getElementById("input_id").value = "";
     setTimeout(() => {
-        start = now();
+        trial_start = now();
         document.getElementById('typingdiv').style.display = 'block';
         document.getElementById("input_id").focus();
         listenkey = true;
@@ -108,7 +108,7 @@ function start_typing() {
 
 function listeners() {
     document.getElementById('input_id').addEventListener('keydown', function(e) {
-        let time = now() - start;
+        let time = now() - trial_start;
         time = Math.round(time * 1000);
         let keycode = e.which || e.keyCode || 0;
         let key;
@@ -122,7 +122,7 @@ function listeners() {
         keysdown.push(key + '&' + e.code + '&' + keycode + '&' + time);
     });
     document.getElementById('input_id').addEventListener('keyup', function(e) {
-        let time = now() - start;
+        let time = now() - trial_start;
         time = Math.round(time * 1000);
         let keycode = e.which || e.keyCode || 0;
         let key;
@@ -352,7 +352,7 @@ examples = [
 sections = examples.concat(sections);
 
 let subject_results = [
-    'subject_id', 'section', 'trial', 'type', 'sect_code', 'original', 'entered', 'similarity', 'valid', 'keysdown', 'keysup'
+    'subject_id', 'section', 'trial', 'type', 'sect_code', 'original', 'entered', 'similarity', 'valid', 'trial_start', 'keysdown', 'keysup'
 ].join("\t") + "\n";
 
 let add_f = "";
@@ -360,7 +360,7 @@ let add_f = "";
 function add_response(valid) {
     simil = (Math.round(similarity * 100) / 100).toFixed(2);
     subject_results += [
-        subject_id, sctn, trial, testitem[1], testitem[2] + add_f, testitem[0], entered, simil, valid, keysdown.join("|"), keysup.join("|")
+        subject_id, sctn, trial, testitem[1], testitem[2] + add_f, testitem[0], entered, simil, valid, Math.round(trial_start * 1000), keysdown.join("|"), keysup.join("|")
     ].join("\t") + "\n";
 }
 
