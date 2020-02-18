@@ -34,6 +34,7 @@ function nexttrial() {
         window.testitem = sections[sctn].shift();
         document.getElementById('tomemorize').textContent = testitem[0];
         document.getElementById('memorize').style.display = 'block';
+        disp_start = now();
     } else {
         if (sctn < sections.length - 1) {
             sctn++;
@@ -92,14 +93,15 @@ function validate() {
     }
 }
 
-let trial_start;
+let type_start, disp_start, disp_end;
 let listenkey = false;
 
 function start_typing() {
     document.getElementById('memorize').style.display = 'none';
+    disp_end = now();
     document.getElementById("input_id").value = "";
     setTimeout(() => {
-        trial_start = now();
+        type_start = now();
         document.getElementById('typingdiv').style.display = 'block';
         document.getElementById("input_id").focus();
         listenkey = true;
@@ -108,7 +110,7 @@ function start_typing() {
 
 function listeners() {
     document.getElementById('input_id').addEventListener('keydown', function(e) {
-        let time = now() - trial_start;
+        let time = now() - type_start;
         time = Math.round(time * 1000);
         let keycode = e.which || e.keyCode || 0;
         let key;
@@ -122,7 +124,7 @@ function listeners() {
         keysdown.push(key + '&' + e.code + '&' + keycode + '&' + time);
     });
     document.getElementById('input_id').addEventListener('keyup', function(e) {
-        let time = now() - trial_start;
+        let time = now() - type_start;
         time = Math.round(time * 1000);
         let keycode = e.which || e.keyCode || 0;
         let key;
@@ -179,9 +181,10 @@ var subject_id =
 
 function prep_cond() {
     window.fakedsection = rchoice([1, 2, 3]);
-    let beginning = "The remaining test will be the same, but it will consist of three sections. You will receive instructions before each section separately.<br><br>";
-    let fakeit = "<b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation where you engage in a serious illegal activity while using your computer (e.g. drafting a plan for a terrorist attack or arranging a contract murder via chat messages) and it is important for you to hide your identity, which may be detected based on the way you type. Therefore, you want to type differently from how you normally would.";
-    window.blocktexts = ["<b>please type just as you normally would</b>. This represents a scenario where you simply use the computer in a regular situation (e.g. drafting a document for your legal work or writing casual chat messages) and you have nothing important to hide.", "<b>again please type just as you normally would</b>. (This again represents a scenario where you simply use the computer in a regular situation and you have nothing important to hide.)"];
+    document.getElementById('fakedsect_id').textContent = ['first', 'second', 'third'][fakedsection - 1];
+    let beginning = "Now starts the full test that consists of three sections. You will receive instructions before each section separately.<br><br>";
+    let fakeit = "<b>please try to fake your way of typing</b>. It is up to you how you do this. This represents a situation in which you try to hide your identity while typing (e.g. because you are doing something illegal on the computer). Imagine that the keystroke behavior could be used to determine whether it is you who writes these texts. Therefore, you want to type differently from how you normally would.";
+    window.blocktexts = ["<b>please type just as you normally would</b>.", "<b>again please type just as you normally would</b>."];
     blocktexts.splice(fakedsection - 1, 0, fakeit);
     ['first', 'second', 'third'].forEach((sectnum, indx) => {
         blocktexts[indx] = 'In this ' + sectnum + ' section, ' + blocktexts[indx];
@@ -352,7 +355,7 @@ examples = [
 sections = examples.concat(sections);
 
 let subject_results = [
-    'subject_id', 'section', 'trial', 'type', 'sect_code', 'original', 'entered', 'similarity', 'valid', 'trial_start', 'keysdown', 'keysup'
+    'subject_id', 'section', 'trial', 'type', 'sect_code', 'original', 'entered', 'similarity', 'valid', 'display_start', 'display_end', 'type_start', 'keysdown', 'keysup'
 ].join("\t") + "\n";
 
 let add_f = "";
@@ -360,7 +363,7 @@ let add_f = "";
 function add_response(valid) {
     simil = (Math.round(similarity * 100) / 100).toFixed(2);
     subject_results += [
-        subject_id, sctn, trial, testitem[1], testitem[2] + add_f, testitem[0], entered, simil, valid, Math.round(trial_start * 1000), keysdown.join("|"), keysup.join("|")
+        subject_id, sctn, trial, testitem[1], testitem[2] + add_f, testitem[0], entered, simil, valid, Math.round(disp_start * 1000), Math.round(disp_end * 1000), Math.round(type_start * 1000), keysdown.join("|"), keysup.join("|")
     ].join("\t") + "\n";
 }
 
