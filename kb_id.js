@@ -57,8 +57,8 @@ function validate() {
     window.entered = document.getElementById("input_id").value;
     let orig = testitem[0];
     window.similarity = similar_text(entered, orig, true);
-    words_ori = orig.split(' ').length;
-    words_ent = entered.split(' ').length;
+    words_ori = orig.match(/\b(\w+)\b/g).length;
+    words_ent = entered.match(/\b(\w+)\b/g).length;
     chars_ori = orig.replace(/[^a-zA-Z]+/g, '');
     chars_ent = entered.replace(/[^a-zA-Z]+/g, '');
     let feedwait = 2000;
