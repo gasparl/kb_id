@@ -325,15 +325,16 @@ var now = function() {
     return performance.now();
 };
 
-let texts_informal = ["his thoughts were not of the future, but my own past.", "i always knew you were a poor captain, but a *captain*", "i don’t know how it is that wrinkles don't hurt.", "i know some of you want to do because you want it.", "i wondered why, if he had to knock up the archbishop", "if i am not, i had the opportunity to renovate it", "in fact, i've never felt so appraised in all my life.", "it took shape; it was a debate before the students", "it was dark enough that i could feel a slight itching.", "it's good to see you!! i hope you're here to see her.", "not remember any of this amounts to anything.", "now she seemed to have the man turned over to her.", "now, that, fame, is for me to measure up to you.", "salvation and a place where you gave up thinking.", "swore, if i ever had the pleasure of doing that myself!", "teach him how to fish, and he will eat for a day.", "that your passing adds a sense of honor, and decency",
-    "the effect is the sort of romance that sustains", "the stake went down, there was a mix-up in the lab", "these languages, the number of active terrorists.", "turning a corner of the building on the sixth floor."
-]; // 1062 characters, 219 words
+let texts_informal = ["swore, if i ever had the pleasure of doing that myself!", "i always knew you were a poor captain, but a *captain*", "if i am not, i had the opportunity to renovate it", "it was dark enough that i could feel a slight itching.", "it's good to see you!! i hope you're here to see her.", "his thoughts were not of the future, but my own past.", "i wondered why, if he had to knock up the archbishop", "in fact, i've never felt so appraised in all my life.", "turning a corner of the building on the sixth floor.", "that your passing adds a sense of honor, and decency", "the effect is the sort of romance that sustains", "i know some of you want to do because you want it.", "it took shape; it was a debate before the students", "now she seemed to have the man turned over to her.", "the stake went down, there was a mix-up in the lab", "now, that, fame, is for me to measure up to you.", "salvation and a place where you gave up thinking.",
+    "teach him how to fish, and he will eat for a day.", "i don’t know how it is that wrinkles don't hurt.", "these languages, the number of active terrorists.", "and then i intend to waste the rest of the city.", "that is classic. and i must enact every cliche.", "the belief that this procedure is also the only", "they propose that people with little money must", "he was naked, but there was nothing else to do.", "an angel, cast down from the abandoned church.", "my therapist told me the way to my new school.", "it was time to find out about the eco-friendly", "neutralize the threat as quickly as you can.", "never test the depth of the great depression."
+]; // 1480 characters, 308 words
 
-let texts_formal = ["a large group of scientists from developing regions.", "and explaining how humans are the major cause", "compares left and right chemical seed detectors.", "his computer but that the company should not mind me.", "i write to inform you that your profile is accurate.", "if you cannot find a lady, who would be classified", "in defense of the other groups to that of our parents’", "in order to meet the needs of the nation's mail users.", "interventions for older adults who would be good to get", "knowing what is best for a computer to use the word.", "measure due to the location of two official parks", "member, the success of the independent film industry.", "mercury emissions contribute to ground-level ozone", "objective was to make the experimental program", "president for programs to ask for community support", "struggles last year and i wanted to be there…", "the final book of the new territories’ walled villages.",
-    "the food may not live up to their european models.", "there are two sets of equatorial ligands for species v", "therefore face all of the information it contains.", "your contribution will help us begin organizing"
-]; // 1065 characters, 181 words
+let texts_formal = ["interventions for older adults who would be good to get", "president for programs to ask for community support", "struggles last year and i wanted to be there…", "the final book of the new territories’ walled villages.", "in defense of the other groups to that of our parents’", "in order to meet the needs of the nation's mail users.", "there are two sets of equatorial ligands for species v", "his computer but that the company should not mind me.", "if you cannot find a lady, who would be classified", "member, the success of the independent film industry.", "mercury emissions contribute to ground-level ozone", "a large group of scientists from developing regions.", "and explaining how humans are the major cause", "i write to inform you that your profile is accurate.", "knowing what is best for a computer to use the word.", "compares left and right chemical seed detectors.", "your contribution will help us begin organizing",
+    "the food may not live up to their european models.", "therefore face all of the information it contains.", "bring binoculars for the annual maiden’s festival.", "measure due to the location of two official parks", "objective was to make the experimental program", "more than half the island is the world’s tallest", "the best fit of equatorial ligands that can fit", "i am waiting for your mail as soon as possible.", "spent thousands of dollars in unnecessary fees.", "and routines, but to the host industry region.", "the preliminary stages of the holiday mailing", "secure this fund for the good work to others.", "were similar for the two types of patrolling"
+]; // 1484 characters, 265 words
 
-// (1062+1065)/3 = 709; ca. 700 chars per section
+// (1484+1480)/3 = 988 chars per section
+// (265+308)/3 = 191 avg. words per section
 
 texts_formal = texts_formal.sort((a, b) => a.length - b.length);
 texts_informal = texts_informal.sort((a, b) => a.length - b.length);
@@ -359,7 +360,7 @@ sections = shuffle(sections);
 examples = [
     [
         ["i am ready for the last day of swimming class", "NA", 0],
-        ["bring binoculars for the annual maiden’s festival.", "NA", 0]
+        ["a real difference in the lives of all animals.", "NA", 0]
     ]
 ];
 
