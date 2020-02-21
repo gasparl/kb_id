@@ -18,6 +18,11 @@ function consented() {
     window.consent_now = Date.now();
 }
 
+function no_cons() {
+    document.getElementById('consent').style.display = 'none';
+    document.getElementById('nocons_id').style.display = 'block';
+}
+
 let sctn = 0;
 let trial = 0;
 let keysup, keysdown;
@@ -320,9 +325,15 @@ var now = function() {
     return performance.now();
 };
 
-let texts_informal = ["all i want is to find the man i love.", "all my life i said i wanted to get to this one!", "among languages, it is best never to meet.", "and then they go out to the bogs and marshes", "asked if i thought it would be for vanity's sake.", "because the procedure can be used for anything", "claiming that we are here to see her.", "come on, i don’t have any comments.", "finished working on the house in those days.", "found out how to put it all together.", "go through all, and see if he'll carry it.", "he kept trying to get a haircut!", "he opened the door to speak to you.", "he recorded it a few days after reading", "he recorded it a few days ago.", "he spoke the last word in any argument.", "he told them to knock it off and take a step up.", "i constantly tried to get into your house.", "i didn’t know where i was gonna go.", "i don’t know how it is that wrinkles don't hurt.", "i don’t know how to find him.", "i had, it is true, told her that she should", "i hope you can keep up! lets go!", "i let go, and he fell in love.", "i like life on the home front.", "i really don’t want to be that guy.", "i told them to knock it off and take a step up.", "it was a long walk back to my barracks", "it's hard to find a vampire at her side.", "just try it for a long trip home", "life is going to change the future.", "maybe we did have a dramatic quality.", "mine are the ones that might be too", "omg haha i should be asking you.", "or muscatel, on the other side of the wall.", "our souls in such a short time", "reserved for members of the families he butchered.", "she stops in the middle of the road.", "sometimes we stopped to take a step up!", "teach him how to fish, and he will eat for a day.", "that is classic. and i must enact every cliche.", "the cave was the home of a missionary.", "the next day he hears a knock on the door again.", "thirty-five percent of the speed", "too bad there's not a way to tie this in nicely.", "we slipped through the filter.", "we won’t be able to get local agriculture", "we're not out of this ship", "when i had told her all that i needed to move on.", "you found a way to shout louder", "you'd be interested in the study in england"];
+let texts_informal = ["his thoughts were not of the future, but my own past.", "i always knew you were a poor captain, but a *captain*", "i don’t know how it is that wrinkles don't hurt.", "i know some of you want to do because you want it.", "i wondered why, if he had to knock up the archbishop", "if i am not, i had the opportunity to renovate it", "in fact, i've never felt so appraised in all my life.", "it took shape; it was a debate before the students", "it was dark enough that i could feel a slight itching.", "it's good to see you!! i hope you're here to see her.", "not remember any of this amounts to anything.", "now she seemed to have the man turned over to her.", "now, that, fame, is for me to measure up to you.", "salvation and a place where you gave up thinking.", "swore, if i ever had the pleasure of doing that myself!", "teach him how to fish, and he will eat for a day.", "that your passing adds a sense of honor, and decency",
+    "the effect is the sort of romance that sustains", "the stake went down, there was a mix-up in the lab", "these languages, the number of active terrorists.", "turning a corner of the building on the sixth floor."
+]; // 1062 characters, 219 words
 
-let texts_formal = ["adequate charges to cover the card", "ambassador to the united states.", "analysis of the first theme in the recapitulation", "and also i will be making a powerpoint.", "at last you won't be inundated with solicitations.", "at one time it was a means of portraiture", "auction book from last year's $1.55 billion.", "away to protect ocean wildlife.", "bring binoculars for the annual maiden’s festival.", "cannot afford to have a tree-lined boulevard", "coordinated events such as film festivals.", "dramatically improve the lives of at-risk youth", "emphasized that it was not until 1829", "example 2: harmonic structure of this movement.", "has been referred to as privileged", "have access to the information", "he said that they had overstayed", "homosexual, and founder of the chinese peasantry.", "honors the founder of the first movement", "however, it is at the very end of the city.", "i think that there are logical sub-figures", "i wanted to be a natural behavior.", "if you want to have a formidable adversary", "in-nest navigation will be a very simple function.", "intensity ratio of d1 over d2 was 1.6.", "it is fascinating to watch the bananas grow.", "it is time to move to a ‘maintenance’ stage.", "it strays from reason in the way of amending ab1x.", "most say they're driven by the 2.2% absolute", "my house was built in 1931", "next, we will cite some of the analysis", "once again, please accept my personal “thank you!”", "people may not need to cause a crisis.", "perhaps one may have a greater effect", "read just what people tell on this stuff:", "responding to a wave of popular support.", "some would say it is a long, hard", "spring right around the corner.", "strong behavior of the female ice dancer", "systems in their own backyards.", "temple was on the trading routes", "the effect sizes are shown in tables 2 and 3.", "the food may not live up to their european models.", "the issue came up in her suspension", "the return to b in the exposition.", "there are only a few days to live.", "those included costs associated with its power", "those were the first to experience it!", "tourist district, it is full of giant malls.", "we are committed to the concept of contract", "you into the ranks of tax payers"];
+let texts_formal = ["a large group of scientists from developing regions.", "and explaining how humans are the major cause", "compares left and right chemical seed detectors.", "his computer but that the company should not mind me.", "i write to inform you that your profile is accurate.", "if you cannot find a lady, who would be classified", "in defense of the other groups to that of our parents’", "in order to meet the needs of the nation's mail users.", "interventions for older adults who would be good to get", "knowing what is best for a computer to use the word.", "measure due to the location of two official parks", "member, the success of the independent film industry.", "mercury emissions contribute to ground-level ozone", "objective was to make the experimental program", "president for programs to ask for community support", "struggles last year and i wanted to be there…", "the final book of the new territories’ walled villages.",
+    "the food may not live up to their european models.", "there are two sets of equatorial ligands for species v", "therefore face all of the information it contains.", "your contribution will help us begin organizing"
+]; // 1065 characters, 181 words
+
+// (1062+1065)/3 = 709; ca. 700 chars per section
 
 texts_formal = texts_formal.sort((a, b) => a.length - b.length);
 texts_informal = texts_informal.sort((a, b) => a.length - b.length);
@@ -347,8 +358,8 @@ section_numbers.forEach(indx => {
 sections = shuffle(sections);
 examples = [
     [
-        ["never represented a majority of the council", "NA", 0],
-        ["i didn’t know where i was gonna go.", "NA", 0]
+        ["i am ready for the last day of swimming class", "NA", 0],
+        ["bring binoculars for the annual maiden’s festival.", "NA", 0]
     ]
 ];
 

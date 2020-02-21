@@ -13,7 +13,7 @@ $subject_results = $request->results_post;
 $outcome = file_put_contents($file_name, $subject_results, FILE_APPEND);
 
 if ($outcome > 500 AND substr($file_name, -4) === ".txt" AND substr($file_name, -19, 4) === "_202") {
-    echo "https://gasparl.github.io/keycheck/";
+    echo "https://app.prolific.co/submissions/complete?cc=56EB9E71";
 } else {
     if (is_file($file_name) === FALSE) {
         echo "Failed to save file " . $file_name . "! Please do not close this page, but contact gaspar.lukacs@univie.ac.at! (" . $outcome . ")";

@@ -19,32 +19,40 @@
 
         <div class="longtext">
             <p><b>Study Goal:</b>
-                <br>The study aims to assess the validity of typing pattern based authentication. You will be asked to type in various texts, and your keypress details (the time of pressing down and letting up each key) will be recorded. Using the
-                data
-                obtained from many participants in this study, we will try to see whether or not we can identify the person who truly wrote a specific text section, based on the typing pattern of the same person in other text sections. In one part
-                of
-                the study, you will be asked to try to fake the way you type. In the rest of the study, you will be asked to type as you normally would.</p>
+                <br>The study aims to assess the validity of typing-based authentication. You will be asked to type in
+                various texts, and we record the time elapsed between key presses. We examine – based on the typing pattern – whether a person who wrote a text is the same that
+                wrote a previous text. In one part of the study, you will be asked to try to fake the way you type.
+                In the rest of the study, you will be asked to type as you normally would. At no point will we be able
+                to connect the typing data to you individually.</p>
             <p><b>Payment and Rules:</b>
-                <br>The test takes around 20-25 minutes. (Not counting any voluntary short breaks during testing, which you may take any time.) Completed and valid participation will be rewarded with $3.00 gross. You can stop participating in the
-                study (by closing or refreshing the website) at any time, and without giving reasons. In
-                that
-                case,
-                all your data will be erased, and you will not receive payment.</p>
-            <p><b>Data:</b>
-                <br>The data from the following test will be used and published to be freely available for research purposes. The data will not reveal who you are, you will not be named and your identity will remain strictly confidential.</p>
+                <br>Completed and valid participation will be rewarded with GBP 1.00 and the task will take between 10-15 minutes. You can stop participating in the study at any time and without giving reasons. In that
+                case, all your data will be erased, and you will not receive payment.</p>
             <p><b>Website and Contact:</b>
                 <br>This web-based experimental program has been thoroughly tested and proven stable many times, but we do not take responsibility for potential unexpected technical issues. Nonetheless, if you experience any problems, you can
                 contact
                 gaspar.lukacs @ univie.ac.at (Gaspar Lukacs at the University of Vienna).</p>
-            <p><b>Consent:</b>
-                <br>
-                By clicking the "Consent" button below, you confirm that you have read and understood the participation information. You also confirm that you will be concentrating on the tasks and answering questions truthfully and to the best of
-                your knowledge.</p>
             <br>
-
+            <b>Do you agree with the following?</b>
+            <ul class="list-style-type: square">
+                <li>I have read and understood the information for this study.</li>
+                <li>I understand that my participation is voluntary and that I can stop the survey at any time without giving a reason.</li>
+                <li>I understand that I remain fully anonymous and that I won’t be identifiable in any publications or reports on the results of this study.</li>
+                <li>I understand that the results of this survey might be reported in academic publications or conference presentations.</li>
+                <li>I understand that I will not benefit financially from this study or from any possible outcome it may result in in the future.</li>
+                <li>I understand that I will be compensated for the portion of time spent in the study or fully compensated if I choose to withdraw.</li>
+            </ul>
+            Please note that consent is required if you wish to participate.
         </div>
+        <br>
+        <br>
 
-        <button onclick='consented();'>Consent</button>
+        <button onclick='consented();'>Yes</button>
+        <button onclick='no_cons();'>No</button>
+    </div>
+
+    <div class="defau_long" id="nocons_id">
+        You indicated that you do not agree with our terms. If this was a mistake or if you change your mind, you can reload the page and choose to agree to the terms in order to participate.
+
     </div>
 
     <div id="intro" class="defau_long">
@@ -100,7 +108,7 @@
         <i>Please type in the text that you just saw.</i>
         <br>
         <br>
-        <input size="40" type="text" style="font-size:120%" id="input_id">
+        <input size="45" type="text" style="font-size:120%" id="input_id">
         <br>
         <br>
         <br>
@@ -156,7 +164,7 @@
             <br>
             <br>
             <br>
-             If you have any questions or experience any issues, please contact Dr Bennett Kleinberg (bennett.kleinberg @ ucl.ac.uk) or Gaspar Lukacs (gaspar.lukacs @ univie.ac.at).
+            If you have any questions or experience any issues, please contact Dr Bennett Kleinberg (bennett.kleinberg @ ucl.ac.uk) or Gaspar Lukacs (gaspar.lukacs @ univie.ac.at).
         </h3>
     </div>
 
