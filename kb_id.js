@@ -62,8 +62,6 @@ function validate() {
     window.entered = document.getElementById("input_id").value;
     let orig = testitem[0];
     window.similarity = similar_text(entered, orig, true);
-    words_ori = orig.match(/\b(\w+)\b/g).length;
-    words_ent = entered.match(/\b(\w+)\b/g).length;
     chars_ori = orig.replace(/[^a-zA-Z]+/g, '');
     chars_ent = entered.replace(/[^a-zA-Z]+/g, '');
     let feedwait = 2000;
@@ -77,9 +75,7 @@ function validate() {
         feed.push("The sentence you wrote has too many differences from the original sentence. Please pay closer attention.");
         feedwait = 0;
     }
-    if (words_ori - words_ent > 1) {
-        feed.push("The original sentence had " + words_ori + " words, but you only wrote " + words_ent + ". Please try to properly recall and enter the full sentence on each trial.");
-    } else if (chars_ent.length * 2 / 3 > chars_ori.length) {
+    if (chars_ent.length * 2 / 3 > chars_ori.length) {
         feed.push("The original sentence was much longer than what you wrote. Please try to recall and enter the full sentence on each trial.");
         feedwait += 2000;
     }
