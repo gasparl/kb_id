@@ -75,7 +75,7 @@ function validate() {
         feed.push("The sentence you wrote has too many differences from the original sentence. Please pay closer attention.");
         feedwait = 0;
     }
-    if (chars_ent.length * 2 / 3 > chars_ori.length) {
+    if (chars_ent.length * 2 / 3 < chars_ori.length) {
         feed.push("The original sentence was much longer than what you wrote. Please try to recall and enter the full sentence on each trial.");
         feedwait += 2000;
     }
