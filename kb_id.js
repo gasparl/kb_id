@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 let end_url = "https://www.prolific.co/";
 document.addEventListener("DOMContentLoaded", function() {
-    if (false && mobile()) {
+    if (mobile()) {
         alert(
             "You seem to be using a smartphone or tablet. \nUnfortunately you cannot do this experiment on a mobile device. \nPlease start the experiment again with a normal webbrowser on your computer."
         );
